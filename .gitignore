@@ -1,0 +1,16 @@
+# documents
+*.txt
+*.docx
+*.pdf
+# logs
+*.log
+# images
+*.html
+*.png
+# compressed files for datasets
+*.zip
+/Data/**/
+# saved models
+/Networks/**/
+# __pycache__
+/**/__pycache__/
