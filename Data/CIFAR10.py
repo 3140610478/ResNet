@@ -19,7 +19,7 @@ class DatasetTransformer(Dataset):
         self.dataset = dataset
         self.transform = transform
 
-    def __getitem__(self, index)->tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, index) -> tuple[torch.Tensor, torch.Tensor]:
         x, y = self.dataset[index]
         return self.transform(x), y
 
@@ -36,6 +36,12 @@ val_transform = transforms.Compose([
     transforms.ToTensor(),
 ])
 test_transform = val_transform
+check_transform = test_transform
+demo_transform = check_transform
+
+
+CIFAR10_classes = ('plane', 'car', 'bird', 'cat', 'deer',
+                   'dog', 'frog', 'horse', 'ship', 'truck')
 
 
 training_set = torchvision.datasets.CIFAR10(
@@ -48,12 +54,13 @@ CIFAR10_train, CIFAR10_val = random_split(training_set, (45000, 5000))
 
 CIFAR10_train = DatasetTransformer(CIFAR10_train, train_transform)
 CIFAR10_val = DatasetTransformer(CIFAR10_val, val_transform)
-CIFAR10_test = torchvision.datasets.CIFAR10(
+CIFAR10_demo = torchvision.datasets.CIFAR10(
     data_path,
     train=False,
-    transform=test_transform,
+    transform=None,
     download=True
 )
+CIFAR10_test = DatasetTransformer(CIFAR10_demo, test_transform)
 
 CIFAR10_len_train, CIFAR10_len_val, CIFAR10_len_test = \
     len(CIFAR10_train), len(CIFAR10_val), len(CIFAR10_test)
@@ -64,6 +71,7 @@ CIFAR10_val_loader = DataLoader(
     CIFAR10_val, batch_size=batch_size, shuffle=True)
 CIFAR10_test_loader = DataLoader(
     CIFAR10_test, batch_size=batch_size, shuffle=True)
+CIFAR10_check_loader = CIFAR10_test_loader
 
 CIFAR10_info = "CIFAR10 Datasets\n32x32 images for 10 classes\nNumber of samples from each class:\n" + \
     "CIFAR10_len_train, CIFAR10_len_val, CIFAR10_len_test = {}, {}, {}\n".format(CIFAR10_len_train, CIFAR10_len_val, CIFAR10_len_test) + \

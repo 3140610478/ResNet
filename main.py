@@ -8,7 +8,7 @@ if base_folder not in sys.path:
 if True:
     from Networks.Networks import ResNet110, NonResNet110, ResNet32, NonResNet32
     from Networks.Training import get_optimizers, train_epoch_range, train_until, test
-    from Data.CIFAR10 import CIFAR10_train_loader, CIFAR10_val_loader, CIFAR10_test_loader, CIFAR10_info, CIFAR10_len_train, CIFAR10_len_val, CIFAR10_len_test
+    from Data.CIFAR10 import CIFAR10_info
     from Log.Logger import getLogger
 
 

@@ -10,7 +10,7 @@ base_folder = os.path.abspath(os.path.join(
 if base_folder not in sys.path:
     sys.path.append(base_folder)
 if True:
-    from Data.CIFAR10 import CIFAR10_train_loader, CIFAR10_val_loader, CIFAR10_test_loader, CIFAR10_info, CIFAR10_len_train, CIFAR10_len_val, CIFAR10_len_test
+    from Data.CIFAR10 import CIFAR10_train_loader, CIFAR10_val_loader, CIFAR10_test_loader, CIFAR10_check_loader, CIFAR10_info, CIFAR10_len_train, CIFAR10_len_val, CIFAR10_len_test
 
 
 device = torch.device("cuda") if torch.cuda.is_available()\
@@ -141,3 +141,46 @@ def test(
 
     print("")
     logger.info(message.format(test_loss, test_acc))
+
+
+def check(
+    model: torch.nn.Module,
+    logger: Logger,
+) -> None:
+    logger.info("\nChecking: ")
+
+    message = "[loss]\tcheck:{:.3f}\n[acc]\tcheck:{:.3f}\n"
+    check_loss, check_acc = 0, 0
+    examples = torch.zeros(
+        (10,), dtype=torch.float32, device=device)
+    confusion_matrix = torch.zeros(
+        (10, 10), dtype=torch.float32, device=device)
+
+    model.eval()
+    print("\nChecking:")
+    for sample in tqdm(CIFAR10_check_loader):
+        x, y = sample
+        x, y = x.to(device), y.to(device)
+
+        h = model(x)
+        loss = criterion(h, y)
+
+        h = torch.argmax(h, dim=1)
+        acc = torch.sum(h == y)
+
+        check_loss += len(y)*(float(loss))
+        check_acc += int(acc)
+        
+        for index in zip(y, h):
+            confusion_matrix[index] += 1
+            examples[index[0]] += 1
+    check_loss /= CIFAR10_len_test
+    check_acc /= CIFAR10_len_test
+    confusion_matrix = (confusion_matrix.T / examples).T
+
+    print("")
+    logger.info(message.format(check_loss, check_acc))
+    cm = confusion_matrix.cpu().numpy()
+    logger.info("[confusion matrix]")
+    logger.info("\n".join(["\t".join(["{:.3f}".format(j) for j in i]) for i in cm]))
+    return cm
