@@ -7,7 +7,7 @@ from torch import nn
 class NormedConv2d(nn.Conv2d):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        torch.nn.init.normal_(self.weight, mean=0, std=(self.kernel_size[0]*self.kernel_size[1]*self.in_channels)**0.5)
+        torch.nn.init.normal_(self.weight, mean=0, std=(2/(self.kernel_size[0]*self.kernel_size[1]*self.in_channels))**0.5)
         self.norm = nn.BatchNorm2d(self.out_channels)
 
     def forward(self, input: torch.Tensor) -> torch.Tensor:

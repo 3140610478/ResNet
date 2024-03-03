@@ -12,7 +12,8 @@ if base_folder not in sys.path:
 
 data_path = os.path.abspath(os.path.join(base_folder, "./Data/CIFAR10"))
 batch_size = 128
-
+if not os.path.exists(data_path):
+    os.mkdir(data_path)
 
 class DatasetTransformer(Dataset):
     def __init__(self, dataset: Dataset, transform) -> None:

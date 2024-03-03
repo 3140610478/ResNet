@@ -5,7 +5,7 @@
 # logs
 *.log
 # images
-*.html
+# *.html
 *.png
 # compressed files for datasets
 *.zip

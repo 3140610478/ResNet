@@ -18,19 +18,31 @@ device = torch.device("cuda") if torch.cuda.is_available()\
 criterion = torch.nn.CrossEntropyLoss()
 
 
+# def get_optimizers(
+#     model: torch.nn.Module,
+#     learning_rate: Iterable[float] = (0.005, 0.001, 0.0002)
+# ):
+#     return {
+#         lr: torch.optim.Adam(
+#             model.parameters(),
+#             lr=lr,
+#             weight_decay=0.0001,
+#         )
+#         for lr in learning_rate
+#     }
 def get_optimizers(
     model: torch.nn.Module,
-    learning_rate: Iterable[float] = (0.005, 0.001, 0.0002)
+    learning_rate: Iterable[float] = (0.1, 0.01, 0.001)
 ):
     return {
-        lr: torch.optim.Adam(
+        lr: torch.optim.SGD(
             model.parameters(),
             lr=lr,
+            momentum=0.0,
             weight_decay=0.0001,
         )
         for lr in learning_rate
     }
-
 
 def train_epoch(
     model: torch.nn.Module,

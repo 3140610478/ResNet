@@ -52,41 +52,20 @@ if __name__ == "__main__":
     resnet110_logger.info("Warm-up")
     start_epoch = 0
     start_epoch = train_until(resnet110, resnet110_logger, 0.2,
-                              resnet110_optimizers[0.001])
-    resnet110_logger.info("learning_rate = 0.005")
-    train_epoch_range(resnet110, resnet110_logger, start_epoch, 50,
-                      resnet110_optimizers[0.005])
-    resnet110_logger.info("learning_rate = 0.001")
+                              resnet110_optimizers[0.01])
+    resnet110_logger.info("learning_rate = 0.1")
+    train_epoch_range(resnet110, resnet110_logger, start_epoch, 100,
+                      resnet110_optimizers[0.1])
+    resnet110_logger.info("learning_rate = 0.01")
     train_epoch_range(resnet110, resnet110_logger, 100, 150,
-                      resnet110_optimizers[0.001])
-    resnet110_logger.info("learning_rate = 0.0002")
+                      resnet110_optimizers[0.01])
+    resnet110_logger.info("learning_rate = 0.001")
     train_epoch_range(resnet110, resnet110_logger, 150, 200,
-                      resnet110_optimizers[0.0002])
+                      resnet110_optimizers[0.001])
     # train_epoch_range(resnet110, resnet110_logger, 0, 200,
     #                   resnet110_optimizer)
     # testing
     test(resnet110, resnet110_logger)
-
-    # NonResNet110
-    nonresnet110_logger.info("NonResNet110 on CIFAR-10\n")
-    # warm-up epoch
-    nonresnet110_logger.info("Warm-up")
-    start_epoch = 0
-    start_epoch = train_until(nonresnet110, nonresnet110_logger, 0.2,
-                              nonresnet110_optimizers[0.001])
-    nonresnet110_logger.info("learning_rate = 0.005")
-    train_epoch_range(nonresnet110, nonresnet110_logger, start_epoch, 100,
-                      nonresnet110_optimizers[0.005])
-    nonresnet110_logger.info("learning_rate = 0.001")
-    train_epoch_range(nonresnet110, nonresnet110_logger, 100, 150,
-                      nonresnet110_optimizers[0.001])
-    nonresnet110_logger.info("learning_rate = 0.0002")
-    train_epoch_range(nonresnet110, nonresnet110_logger, 150, 200,
-                      nonresnet110_optimizers[0.0002])
-    # train_epoch_range(nonresnet110, nonresnet110_logger, 0, 200,
-    #                   nonresnet110_optimizer)
-    test(nonresnet110, nonresnet110_logger)
-
     if not os.path.exists(resnet110_path):
         os.mkdir(resnet110_path)
     torch.save(
@@ -95,6 +74,27 @@ if __name__ == "__main__":
             resnet110_path, "./ResNet110.resnet110"
         )),
     )
+
+    # NonResNet110
+    nonresnet110_logger.info("NonResNet110 on CIFAR-10\n")
+    # warm-up epoch
+    nonresnet110_logger.info("Warm-up")
+    start_epoch = 0
+    start_epoch = train_until(nonresnet110, nonresnet110_logger, 0.2,
+                              nonresnet110_optimizers[0.01])
+    nonresnet110_logger.info("learning_rate = 0.1")
+    train_epoch_range(nonresnet110, nonresnet110_logger, start_epoch, 100,
+                      nonresnet110_optimizers[0.1])
+    nonresnet110_logger.info("learning_rate = 0.01")
+    train_epoch_range(nonresnet110, nonresnet110_logger, 100, 150,
+                      nonresnet110_optimizers[0.01])
+    nonresnet110_logger.info("learning_rate = 0.001")
+    train_epoch_range(nonresnet110, nonresnet110_logger, 150, 200,
+                      nonresnet110_optimizers[0.001])
+    # train_epoch_range(nonresnet110, nonresnet110_logger, 0, 200,
+    #                   nonresnet110_optimizer)
+    # testing
+    test(nonresnet110, nonresnet110_logger)
     if not os.path.exists(nonresnet110_path):
         os.mkdir(nonresnet110_path)
     torch.save(
@@ -119,41 +119,20 @@ if __name__ == "__main__":
     resnet32_logger.info("Warm-up")
     start_epoch = 0
     start_epoch = train_until(resnet32, resnet32_logger, 0.2,
-                              resnet32_optimizers[0.001])
-    resnet32_logger.info("learning_rate = 0.005")
-    train_epoch_range(resnet32, resnet32_logger, start_epoch, 50,
-                      resnet32_optimizers[0.005])
-    resnet32_logger.info("learning_rate = 0.001")
+                              resnet32_optimizers[0.01])
+    resnet32_logger.info("learning_rate = 0.1")
+    train_epoch_range(resnet32, resnet32_logger, start_epoch, 100,
+                      resnet32_optimizers[0.1])
+    resnet32_logger.info("learning_rate = 0.01")
     train_epoch_range(resnet32, resnet32_logger, 100, 150,
-                      resnet32_optimizers[0.001])
-    resnet32_logger.info("learning_rate = 0.0002")
+                      resnet32_optimizers[0.01])
+    resnet32_logger.info("learning_rate = 0.001")
     train_epoch_range(resnet32, resnet32_logger, 150, 200,
-                      resnet32_optimizers[0.0002])
+                      resnet32_optimizers[0.001])
     # train_epoch_range(resnet32, resnet32_logger, 0, 200,
     #                   resnet32_optimizer)
     # testing
     test(resnet32, resnet32_logger)
-
-    # NonResNet32
-    nonresnet32_logger.info("NonResNet32 on CIFAR-10\n")
-    # warm-up epoch
-    nonresnet32_logger.info("Warm-up")
-    start_epoch = 0
-    start_epoch = train_until(nonresnet32, nonresnet32_logger, 0.2,
-                              nonresnet32_optimizers[0.001])
-    nonresnet32_logger.info("learning_rate = 0.005")
-    train_epoch_range(nonresnet32, nonresnet32_logger, start_epoch, 100,
-                      nonresnet32_optimizers[0.005])
-    nonresnet32_logger.info("learning_rate = 0.001")
-    train_epoch_range(nonresnet32, nonresnet32_logger, 100, 150,
-                      nonresnet32_optimizers[0.001])
-    nonresnet32_logger.info("learning_rate = 0.0002")
-    train_epoch_range(nonresnet32, nonresnet32_logger, 150, 200,
-                      nonresnet32_optimizers[0.0002])
-    # train_epoch_range(nonresnet32, nonresnet32_logger, 0, 200,
-    #                   nonresnet32_optimizer)
-    test(nonresnet32, nonresnet32_logger)
-
     if not os.path.exists(resnet32_path):
         os.mkdir(resnet32_path)
     torch.save(
@@ -162,6 +141,27 @@ if __name__ == "__main__":
             resnet32_path, "./ResNet32.resnet32"
         )),
     )
+
+    # NonResNet32
+    nonresnet32_logger.info("NonResNet32 on CIFAR-10\n")
+    # warm-up epoch
+    nonresnet32_logger.info("Warm-up")
+    start_epoch = 0
+    start_epoch = train_until(nonresnet32, nonresnet32_logger, 0.2,
+                              nonresnet32_optimizers[0.01])
+    nonresnet32_logger.info("learning_rate = 0.1")
+    train_epoch_range(nonresnet32, nonresnet32_logger, start_epoch, 100,
+                      nonresnet32_optimizers[0.1])
+    nonresnet32_logger.info("learning_rate = 0.01")
+    train_epoch_range(nonresnet32, nonresnet32_logger, 100, 150,
+                      nonresnet32_optimizers[0.01])
+    nonresnet32_logger.info("learning_rate = 0.001")
+    train_epoch_range(nonresnet32, nonresnet32_logger, 150, 200,
+                      nonresnet32_optimizers[0.001])
+    # train_epoch_range(nonresnet32, nonresnet32_logger, 0, 200,
+    #                   nonresnet32_optimizer)
+    # testing
+    test(nonresnet32, nonresnet32_logger)
     if not os.path.exists(nonresnet32_path):
         os.mkdir(nonresnet32_path)
     torch.save(
