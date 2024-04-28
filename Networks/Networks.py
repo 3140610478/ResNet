@@ -97,7 +97,7 @@ class ResNet32(nn.Module):
                 ),
             ),
             # Average pooling
-            nn.AvgPool2d(8),
+            nn.AdaptiveAvgPool2d(output_size=1),
             # Flattening
             nn.Flatten(),
             # Fully connected layer
@@ -148,7 +148,7 @@ class NonResNet32(nn.Module):
                 ),
             ),
             # Average pooling
-            nn.AvgPool2d(8),
+            nn.AdaptiveAvgPool2d(output_size=1),
             # Flattening
             nn.Flatten(),
             # Fully connected layer
@@ -212,7 +212,7 @@ class ResNet110(nn.Module):
                 ),
             ),
             # Average pooling
-            nn.AvgPool2d(8),
+            nn.AdaptiveAvgPool2d(output_size=1),
             # Flattening
             nn.Flatten(),
             # Fully connected layer
@@ -263,7 +263,7 @@ class NonResNet110(nn.Module):
                 ),
             ),
             # Average pooling
-            nn.AvgPool2d(8),
+            nn.AdaptiveAvgPool2d(output_size=1),
             # Flattening
             nn.Flatten(),
             # Fully connected layer
