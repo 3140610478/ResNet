@@ -10,26 +10,12 @@ base_folder = os.path.abspath(os.path.join(
 if base_folder not in sys.path:
     sys.path.append(base_folder)
 if True:
-    from Data.CIFAR10 import CIFAR10_train_loader, CIFAR10_val_loader, CIFAR10_test_loader, CIFAR10_check_loader, CIFAR10_info, CIFAR10_len_train, CIFAR10_len_val, CIFAR10_len_test
-
-
-device = torch.device("cuda") if torch.cuda.is_available()\
-    else torch.device("cpu")
+    from Data.FashionMNIST import train_loader, val_loader, test_loader, check_loader, INFO, len_train, len_val, len_test
+    from config import device
+    
 criterion = torch.nn.CrossEntropyLoss()
 
 
-# def get_optimizers(
-#     model: torch.nn.Module,
-#     learning_rate: Iterable[float] = (0.005, 0.001, 0.0002)
-# ):
-#     return {
-#         lr: torch.optim.Adam(
-#             model.parameters(),
-#             lr=lr,
-#             weight_decay=0.0001,
-#         )
-#         for lr in learning_rate
-#     }
 def get_optimizers(
     model: torch.nn.Module,
     learning_rate: Iterable[float] = (0.1, 0.01, 0.001)
@@ -57,7 +43,7 @@ def train_epoch(
 
     model.train()
     print("\nTraining:")
-    for sample in tqdm(CIFAR10_train_loader):
+    for sample in tqdm(train_loader):
         x, y = sample
         x, y = x.to(device), y.to(device)
 
@@ -73,12 +59,12 @@ def train_epoch(
 
         train_loss += len(y)*(float(loss))
         train_acc += int(acc)
-    train_loss /= CIFAR10_len_train
-    train_acc /= CIFAR10_len_train
+    train_loss /= len_train
+    train_acc /= len_train
 
     model.eval()
     print("\nValidating:")
-    for sample in tqdm(CIFAR10_val_loader):
+    for sample in tqdm(val_loader):
         x, y = sample
         x, y = x.to(device), y.to(device)
 
@@ -90,8 +76,8 @@ def train_epoch(
 
         val_loss += len(y)*(float(loss))
         val_acc += int(acc)
-    val_loss /= CIFAR10_len_val
-    val_acc /= CIFAR10_len_val
+    val_loss /= len_val
+    val_acc /= len_val
 
     result = train_loss, val_loss, train_acc, val_acc
     print("")
@@ -136,7 +122,7 @@ def test(
 
     model.eval()
     print("\nTesting:")
-    for sample in tqdm(CIFAR10_test_loader):
+    for sample in tqdm(test_loader):
         x, y = sample
         x, y = x.to(device), y.to(device)
 
@@ -148,8 +134,8 @@ def test(
 
         test_loss += len(y)*(float(loss))
         test_acc += int(acc)
-    test_loss /= CIFAR10_len_test
-    test_acc /= CIFAR10_len_test
+    test_loss /= len_test
+    test_acc /= len_test
 
     print("")
     logger.info(message.format(test_loss, test_acc))
@@ -170,7 +156,7 @@ def check(
 
     model.eval()
     print("\nChecking:")
-    for sample in tqdm(CIFAR10_check_loader):
+    for sample in tqdm(check_loader):
         x, y = sample
         x, y = x.to(device), y.to(device)
 
@@ -186,8 +172,8 @@ def check(
         for index in zip(y, h):
             confusion_matrix[index] += 1
             examples[index[0]] += 1
-    check_loss /= CIFAR10_len_test
-    check_acc /= CIFAR10_len_test
+    check_loss /= len_test
+    check_acc /= len_test
     confusion_matrix = (confusion_matrix.T / examples).T
 
     print("")

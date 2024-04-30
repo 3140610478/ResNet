@@ -100,17 +100,11 @@ def plot_contents(fig: go.Figure, name: str, contents: dict[str, dict[str, list]
 
 
 if __name__ == '__main__':
-    resnet110 = read_training_log("resnet110.log")
-    nonresnet110 = read_training_log("nonresnet110.log")
     resnet32 = read_training_log("resnet32.log")
-    nonresnet32 = read_training_log("nonresnet32.log")
 
     fig = make_subplots(rows=1, cols=2, subplot_titles=("[loss]", "[acc]"),
                         horizontal_spacing=0.1)
-    plot_contents(fig, "resnet110", resnet110, "blue")
-    plot_contents(fig, "resnet32", resnet32, "skyblue")
-    plot_contents(fig, "nonresnet110", nonresnet110, "darkred")
-    plot_contents(fig, "nonresnet32", nonresnet32, "red")
+    plot_contents(fig, "resnet32", resnet32, "blue")
     fig.update_xaxes(title_text="epochs", row=1, col=1)
     fig.update_xaxes(title_text="epochs", row=1, col=2)
     fig.update_yaxes(title_text="loss", row=1, col=1)

@@ -9,12 +9,11 @@ base_folder = os.path.dirname(os.path.abspath(__file__))
 if base_folder not in sys.path:
     sys.path.append(base_folder)
 if True:
-    from Data.CIFAR10 import CIFAR10_demo, demo_transform, CIFAR10_classes
-
-device = torch.device("cuda") if torch.cuda.is_available()\
-    else torch.device("cpu")
-resnet110 = torch.load(os.path.abspath(os.path.join(
-    base_folder, "./Networks/ResNet110/ResNet110.resnet110")))
+    from Data.FashionMNIST import demo_set, demo_transform, classes
+    from config import device
+    
+resnet32 = torch.load(os.path.abspath(os.path.join(
+    base_folder, "./Networks/ResNet32/ResNet32.resnet32")))
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -26,18 +25,19 @@ current_image_index = 0
 # This function simulates image classification
 def classify_image(img):
     x = demo_transform(img).to(device).unsqueeze(dim=0)
-    y = CIFAR10_classes[resnet110(x).flatten().argmax(dim=0)]
+    x = torch.cat((x, x, x), dim=1)
+    y = classes[resnet32(x).flatten().argmax(dim=0)]
     return y
 
 # Function to update the image and classification text
 def update_image():
     global current_image_index
-    if current_image_index >= len(CIFAR10_demo):
+    if current_image_index >= len(demo_set):
         current_image_index = 0  # Reset to loop continuously
 
-    img, cls = CIFAR10_demo[current_image_index]
+    img, cls = demo_set[current_image_index]
     prediction = classify_image(img)
-    actual = CIFAR10_classes[cls]
+    actual = classes[cls]
     img = img.resize((250, 250), Image.LANCZOS)
     photo = ImageTk.PhotoImage(img)
 
