@@ -36,12 +36,14 @@ class DatasetTransformer(torch.utils.data.Dataset):
 train_transform = transforms.Compose([
     transforms.ToTensor(),
     ToDevice(),
+    transforms.Resize((28, 28)),
     transforms.RandomCrop(28, padding=4),
     transforms.RandomHorizontalFlip(),
 ])
 val_transform = transforms.Compose([
     transforms.ToTensor(),
     ToDevice(),
+    transforms.Resize((28, 28)),
 ])
 test_transform = val_transform
 check_transform = test_transform

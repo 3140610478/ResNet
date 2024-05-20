@@ -104,7 +104,9 @@ def plot_contents(fig: go.Figure, name: str, contents: dict[str, dict[str, list]
 
 
 if __name__ == '__main__':
-
+    folder = os.path.abspath(os.path.join(base_folder, f"./result"))
+    if not os.path.exists(folder):
+        os.mkdir(folder)
     for dataset in datasets:
         fig = make_subplots(rows=1, cols=2, subplot_titles=("[loss]", "[acc]"),
                             horizontal_spacing=0.1)
@@ -120,5 +122,5 @@ if __name__ == '__main__':
         fig.update_yaxes(title_text="loss", row=1, col=1)
         fig.update_yaxes(title_text="accuracy", row=1, col=2)
         plot(fig, filename=os.path.abspath(
-            os.path.join(base_folder, f"./{dataset.__name__.rsplit('.')[-1]}.html")))
+            os.path.join(base_folder, f"./result/{dataset.__name__.rsplit('.')[-1]}.html")))
     pass

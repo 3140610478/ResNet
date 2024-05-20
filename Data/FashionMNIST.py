@@ -56,7 +56,7 @@ test_loader = DataLoader(
 check_loader = test_loader
 
 INFO = \
-    "FashionMNIST Datasets\n32x32 images for 10 classes\nNumber of samples from each class:\n" + \
+    "FashionMNIST Datasets\n28x28 images for 10 classes\nNumber of samples from each class:\n" + \
     "len_train, len_val, len_test = {}, {}, {}\n".format(len_train, len_val, len_test) + \
     "Training Set:\n" + \
     str(one_hot(torch.cat([y for (_, y) in train_loader], dim=0)).sum(dim=0)) + "\n" + \

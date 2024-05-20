@@ -6,6 +6,6 @@ base_folder = os.path.abspath(os.path.join(
 if base_folder not in sys.path:
     sys.path.append(base_folder)
 if True:
-    from Data import MNIST, FashionMNIST
-    
-datasets = (MNIST, FashionMNIST)
+    from Data import MNIST, FashionMNIST, HWDB
+
+datasets = (MNIST, FashionMNIST, HWDB)

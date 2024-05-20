@@ -11,5 +11,5 @@ if True:
     from Networks.AlexNet import AlexNet
     from Networks.GoogLeNet import GoogLeNet
     from Networks.ResNet20 import ResNet20
-    
+
 models = (MLP, LeNet, AlexNet, GoogLeNet, ResNet20)
