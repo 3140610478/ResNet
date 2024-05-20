@@ -12,9 +12,8 @@ if base_folder not in sys.path:
 if True:
     import config
     from Data.utils import DatasetTransformer, train_transform, val_transform, test_transform, check_transform, demo_transform
-    from Log.Logger import getLogger
 
-data_path = os.path.abspath(os.path.join(base_folder, config.data_path, "./FashionMNIST"))
+data_path = os.path.abspath(os.path.join(base_folder, config.data_path, "./MNIST"))
 if not os.path.exists(data_path):
     os.mkdir(data_path)
 
@@ -24,7 +23,7 @@ classes = ("T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
            "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot")
 
 
-training_set = torchvision.datasets.FashionMNIST(
+training_set = torchvision.datasets.MNIST(
     data_path,
     train=True,
     transform=None,
@@ -36,7 +35,7 @@ train_set, val_set = random_split(
 
 train_set = DatasetTransformer(train_set, train_transform)
 val_set = DatasetTransformer(val_set, val_transform)
-demo_set = torchvision.datasets.FashionMNIST(
+demo_set = torchvision.datasets.MNIST(
     data_path,
     train=False,
     transform=None,
@@ -56,8 +55,8 @@ test_loader = DataLoader(
 check_loader = test_loader
 
 INFO = \
-    "FashionMNIST Datasets\n32x32 images for 10 classes\nNumber of samples from each class:\n" + \
-    "len_train, len_val, len_test = {}, {}, {}\n".format(len_train, len_val, len_test) + \
+    "MNIST Datasets\n32x32 images for 10 classes\nNumber of samples from each class:\n" + \
+    "MNIST_len_train, MNIST_len_val, MNIST_len_test = {}, {}, {}\n".format(len_train, len_val, len_test) + \
     "Training Set:\n" + \
     str(one_hot(torch.cat([y for (_, y) in train_loader], dim=0)).sum(dim=0)) + "\n" + \
     "Validating Set:\n" + \
@@ -65,11 +64,6 @@ INFO = \
     "Testing Set:\n" + \
     str(one_hot(torch.cat([y for (_, y) in test_loader], dim=0)).sum(dim=0)) + "\n" + \
     "\n"
-    
-
-logger = getLogger("FashionMNIST")
-logger.info(INFO)
-
 
 if __name__ == "__main__":
     for x, y in check_loader:

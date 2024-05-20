@@ -8,9 +8,9 @@ base_folder = os.path.dirname(os.path.abspath(__file__))
 if base_folder not in sys.path:
     sys.path.append(base_folder)
 if True:
-    from Networks.Networks import ResNet32
+    from Networks import ResNet20
     from Networks.Training import check
-    from Data.FashionMNIST import test_loader, classes
+    from Data import FashionMNIST 
     from Log.Logger import getLogger
 
 if __name__ == '__main__':
@@ -24,8 +24,8 @@ if __name__ == '__main__':
     fig = go.Figure(
         data=go.Heatmap(
             z=confusion_matrix,
-            x=classes,
-            y=classes,
+            x=FashionMNIST.classes,
+            y=FashionMNIST.classes,
             text=confusion_matrix,
             texttemplate="%{z:.3f}",
             hoverongaps=False,
