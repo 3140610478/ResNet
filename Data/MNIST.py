@@ -12,15 +12,16 @@ if base_folder not in sys.path:
 if True:
     import config
     from Data.utils import DatasetTransformer, train_transform, val_transform, test_transform, check_transform, demo_transform
+    from Log.Logger import getLogger
 
-data_path = os.path.abspath(os.path.join(base_folder, config.data_path, "./MNIST"))
+
+data_path = os.path.abspath(os.path.join(
+    base_folder, config.data_path, "./MNIST"))
 if not os.path.exists(data_path):
     os.mkdir(data_path)
 
 
-
-classes = ("T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
-           "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot")
+classes = tuple(str(i) for i in range(10))
 
 
 training_set = torchvision.datasets.MNIST(
@@ -64,6 +65,11 @@ INFO = \
     "Testing Set:\n" + \
     str(one_hot(torch.cat([y for (_, y) in test_loader], dim=0)).sum(dim=0)) + "\n" + \
     "\n"
+
+
+logger = getLogger("MNIST")
+logger.info(INFO)
+
 
 if __name__ == "__main__":
     for x, y in check_loader:

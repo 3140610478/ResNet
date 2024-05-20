@@ -10,7 +10,8 @@
 # compressed files for datasets
 *.zip
 /Data/**/
-# saved models
+# saved models & confusion matrices
 /Networks/**/
+/result
 # __pycache__
 /**/__pycache__/

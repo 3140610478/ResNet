@@ -1,6 +1,7 @@
 import os
 import sys
 import plotly.graph_objects as go
+from plotly.express.colors import qualitative as colorset
 from plotly.offline import plot
 from plotly.subplots import make_subplots
 pass
@@ -8,6 +9,9 @@ base_folder = os.path.dirname(os.path.abspath(__file__))
 log_folder = os.path.abspath(os.path.join(base_folder, "./Log/"))
 if base_folder not in sys.path:
     sys.path.append(base_folder)
+if True:
+    from Networks import models
+    from Data import datasets
 
 
 def read_training_log(filename):
@@ -100,15 +104,21 @@ def plot_contents(fig: go.Figure, name: str, contents: dict[str, dict[str, list]
 
 
 if __name__ == '__main__':
-    resnet32 = read_training_log("resnet32.log")
 
-    fig = make_subplots(rows=1, cols=2, subplot_titles=("[loss]", "[acc]"),
-                        horizontal_spacing=0.1)
-    plot_contents(fig, "resnet32", resnet32, "blue")
-    fig.update_xaxes(title_text="epochs", row=1, col=1)
-    fig.update_xaxes(title_text="epochs", row=1, col=2)
-    fig.update_yaxes(title_text="loss", row=1, col=1)
-    fig.update_yaxes(title_text="accuracy", row=1, col=2)
-    
-    plot(fig, filename=os.path.abspath(os.path.join(base_folder, "./visualize.html")))
+    for dataset in datasets:
+        fig = make_subplots(rows=1, cols=2, subplot_titles=("[loss]", "[acc]"),
+                            horizontal_spacing=0.1)
+        colors = colorset.Plotly
+        for model, color in zip(models, colors):
+            name = name = f"{model.__name__}_on_{dataset.__name__.rsplit('.')[-1]}"
+            log = read_training_log(f"./{name}.log")
+
+            plot_contents(fig, f"{model.__name__}", log, color)
+
+        fig.update_xaxes(title_text="epochs", row=1, col=1)
+        fig.update_xaxes(title_text="epochs", row=1, col=2)
+        fig.update_yaxes(title_text="loss", row=1, col=1)
+        fig.update_yaxes(title_text="accuracy", row=1, col=2)
+        plot(fig, filename=os.path.abspath(
+            os.path.join(base_folder, f"./{dataset.__name__.rsplit('.')[-1]}.html")))
     pass

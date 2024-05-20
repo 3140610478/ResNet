@@ -14,10 +14,10 @@ if True:
     from Data.utils import DatasetTransformer, train_transform, val_transform, test_transform, check_transform, demo_transform
     from Log.Logger import getLogger
 
-data_path = os.path.abspath(os.path.join(base_folder, config.data_path, "./FashionMNIST"))
+data_path = os.path.abspath(os.path.join(
+    base_folder, config.data_path, "./FashionMNIST"))
 if not os.path.exists(data_path):
     os.mkdir(data_path)
-
 
 
 classes = ("T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
@@ -65,7 +65,7 @@ INFO = \
     "Testing Set:\n" + \
     str(one_hot(torch.cat([y for (_, y) in test_loader], dim=0)).sum(dim=0)) + "\n" + \
     "\n"
-    
+
 
 logger = getLogger("FashionMNIST")
 logger.info(INFO)
