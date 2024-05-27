@@ -4,10 +4,6 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from torchvision.models._utils import IntermediateLayerGetter
-from torchvision.models import GoogLeNet
-from torchvision.models.segmentation import DeepLabV3
-from collections import OrderedDict
-from typing import Dict
 
 base_folder = os.path.abspath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), ".."))
@@ -89,7 +85,7 @@ class GoogLeNet(nn.Module):
             ),
             return_layers=return_layers,
         )
-        
+
         # Softmax activation: Removed because Softmax is applied in CrossEntropyLoss
         self.classifier = nn.Sequential(
             nn.AdaptiveAvgPool2d(output_size=1),
@@ -117,8 +113,9 @@ class GoogLeNet(nn.Module):
             nn.Dropout(0.3),
             nn.Linear(256, 10),
             # nn.Softmax(dim=1),
-        )   
-        self.training_weights = nn.Parameter(torch.tensor(GoogLeNet_training_weights), requires_grad=False)
+        )
+        self.training_weights = nn.Parameter(torch.tensor(
+            GoogLeNet_training_weights), requires_grad=False)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         features = self.backbone(x)

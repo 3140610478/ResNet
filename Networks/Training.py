@@ -1,7 +1,6 @@
 import os
 import sys
 import torch
-from torch.nn.functional import one_hot, cross_entropy
 from tqdm import tqdm, trange
 from logging import Logger
 from typing import Iterable
@@ -14,7 +13,8 @@ if True:
     from Networks import GoogLeNet
 
 criterion = torch.nn.CrossEntropyLoss()
-        
+
+
 def get_optimizers(
     model: torch.nn.Module,
     learning_rate: Iterable[float] = (0.1, 0.01, 0.001)
