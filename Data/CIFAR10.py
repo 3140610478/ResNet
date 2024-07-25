@@ -15,6 +15,7 @@ batch_size = 128
 if not os.path.exists(data_path):
     os.mkdir(data_path)
 
+
 class DatasetTransformer(Dataset):
     def __init__(self, dataset: Dataset, transform) -> None:
         self.dataset = dataset
@@ -51,7 +52,10 @@ training_set = torchvision.datasets.CIFAR10(
     transform=None,
     download=True
 )
-CIFAR10_train, CIFAR10_val = random_split(training_set, (45000, 5000))
+CIFAR10_train, CIFAR10_val = random_split(
+    training_set, (45000, 5000),
+    torch.Generator().manual_seed(42),
+)
 
 CIFAR10_train = DatasetTransformer(CIFAR10_train, train_transform)
 CIFAR10_val = DatasetTransformer(CIFAR10_val, val_transform)

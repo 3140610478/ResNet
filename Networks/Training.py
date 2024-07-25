@@ -38,7 +38,7 @@ def get_optimizers(
         lr: torch.optim.SGD(
             model.parameters(),
             lr=lr,
-            momentum=0.0,
+            momentum=0.9,
             weight_decay=0.0001,
         )
         for lr in learning_rate
